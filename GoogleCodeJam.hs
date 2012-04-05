@@ -27,11 +27,11 @@ parseAndSolve :: Show b => (forall u. Parsec String u [a]) -> (a -> b) -> IO ()
 parseAndSolve parser solver = do
   (input :& output) <- readArgs
   -- use stdin if the input isn't given
-  let (getProblem, name) = maybe (hGetContents stdin, name) (readFile &&& id) input
+  let (getProblem, name) = maybe (getContents, "<stdin>") (readFile &&& id) input
   problem <- getProblem
   case runParser parser () name problem of
     Left err    -> hPutStrLn stderr $ "Error: " ++ show err
-    Right cases -> do
+    Right cases -> 
       -- use stdout if the output isn't given
       maybe ($ stdout) (`withFile` WriteMode) output $ \h -> zipWithM_ (\i v -> 
           hPutStrLn h $ "Case #" ++ show i ++ ": " ++ show v
