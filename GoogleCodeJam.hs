@@ -31,7 +31,7 @@ parseAndSolve parser solver = do
   problem <- getProblem
   case runParser parser () name problem of
     Left err    -> hPutStrLn stderr $ "Error: " ++ show err
-    Right cases -> 
+    Right cases ->  do
       -- use stdout if the output isn't given
       maybe ($ stdout) (`withFile` WriteMode) output $ \h -> zipWithM_ (\i v -> 
           hPutStrLn h $ "Case #" ++ show i ++ ": " ++ show v
