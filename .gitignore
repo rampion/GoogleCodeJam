@@ -1,0 +1,7 @@
+*.o
+*.hi
+*.in
+*.out
+AlienLanguage
+FileFixIt
+MinimumScalarProduct
